@@ -118,7 +118,7 @@ LANG_TEXT = {
         "chat_placeholder": "Pose ta question au tuteur…",
         "retake": "🔁 Nouveau round — même matière",
         "another": "🗺️ Choisir une autre aventure",
-        "study_plan": "🧠 Ton plan de power-up",
+        "study_plan": "🧠 Ton plan de progression",
         "review": "📝 Rejouer tes réponses",
         "api_offline": "Pas de clé API : l’application peut quand même fonctionner avec sa banque intégrée.",
         "api_ready": "Clé API saisie. Teste la connexion quand tu veux.",
@@ -161,7 +161,7 @@ LANG_TEXT = {
         "chat_placeholder": "اسأل المدرس الذكي أي شيء…",
         "retake": "🔁 جولة جديدة — نفس الموضوع",
         "another": "🗺️ اختر مغامرة أخرى",
-        "study_plan": "🧠 خطة الـ Power-Up الخاصة بك",
+        "study_plan": "🧠 خطة التطور الخاصة بك",
         "review": "📝 راجع إجاباتك",
         "api_offline": "بدون مفتاح API: يمكن للتطبيق العمل باستخدام بنك الأسئلة المدمج.",
         "api_ready": "تم إدخال مفتاح API. يمكنك اختبار الاتصال عندما تريد.",
@@ -181,6 +181,219 @@ LANG_TEXT = {
     },
 }
 
+# Localized labels for values that are stored internally in English. Keeping the
+# internal values stable prevents language changes from breaking scoring/history.
+SUBJECT_LABELS = {
+    "English": {
+        "Biology": "Biology", "Chemistry": "Chemistry", "Physics": "Physics",
+        "Algebra II": "Algebra II", "World History": "World History",
+        "English Language Arts": "English Language Arts",
+    },
+    "French": {
+        "Biology": "Biologie", "Chemistry": "Chimie", "Physics": "Physique",
+        "Algebra II": "Algèbre II", "World History": "Histoire mondiale",
+        "English Language Arts": "Anglais — langue et littérature",
+    },
+    "Arabic": {
+        "Biology": "علم الأحياء", "Chemistry": "الكيمياء", "Physics": "الفيزياء",
+        "Algebra II": "الجبر II", "World History": "التاريخ العالمي",
+        "English Language Arts": "اللغة الإنجليزية وآدابها",
+    },
+}
+
+LEVEL_LABELS = {
+    "English": {x: x for x in EDUCATION_LEVELS},
+    "French": {
+        "Primary School": "École primaire", "Middle School": "Collège",
+        "High School": "Lycée", "Undergraduate / Bachelor": "Licence / Bachelor",
+        "Graduate / Master": "Master", "Doctorate / PhD": "Doctorat / PhD",
+        "Professional / Vocational": "Formation professionnelle / technique",
+        "Adult / Continuing Education": "Formation pour adultes / formation continue",
+    },
+    "Arabic": {
+        "Primary School": "المدرسة الابتدائية", "Middle School": "المرحلة المتوسطة",
+        "High School": "المرحلة الثانوية", "Undergraduate / Bachelor": "المرحلة الجامعية / بكالوريوس",
+        "Graduate / Master": "ماجستير", "Doctorate / PhD": "دكتوراه",
+        "Professional / Vocational": "التعليم المهني / التقني",
+        "Adult / Continuing Education": "تعليم الكبار / التعليم المستمر",
+    },
+}
+
+LANGUAGE_LABELS = {
+    "English": {"English": "English", "French": "French", "Arabic": "Arabic"},
+    "French": {"English": "Anglais", "French": "Français", "Arabic": "Arabe"},
+    "Arabic": {"English": "الإنجليزية", "French": "الفرنسية", "Arabic": "العربية"},
+}
+
+DIFFICULTY_LABELS_LOCAL = {
+    "English": {1: "Easy", 2: "Medium", 3: "Hard"},
+    "French": {1: "Facile", 2: "Moyen", 3: "Difficile"},
+    "Arabic": {1: "سهل", 2: "متوسط", 3: "صعب"},
+}
+
+GRADE_HEADLINES_LOCAL = {
+    "English": {"Outstanding": "Outstanding", "Strong run": "Strong run", "Halfway there": "Halfway there", "Rough one": "Rough one"},
+    "French": {"Outstanding": "Excellent", "Strong run": "Très bon résultat", "Halfway there": "À mi-chemin", "Rough one": "Résultat difficile"},
+    "Arabic": {"Outstanding": "ممتاز", "Strong run": "نتيجة قوية", "Halfway there": "أنت في منتصف الطريق", "Rough one": "جولة صعبة"},
+}
+
+VICTORY_LINES_LOCAL = {
+    "English": [],
+    "French": [
+        "🎉 Le modèle n’a presque rien trouvé à signaler. C’est plutôt rare.",
+        "🎉 Confiance élevée, faiblesses limitées. Bravo pour cette performance.",
+        "🎉 Tu as surpris le classifieur : il n’a trouvé aucun vrai point faible.",
+    ],
+    "Arabic": [
+        "🎉 النموذج لم يجد تقريبًا أي نقطة ضعف. وهذا أمر نادر.",
+        "🎉 الثقة مرتفعة ونقاط الضعف محدودة. أحسنت في هذه الجولة.",
+        "🎉 تفوقت على المصنّف؛ كان يبحث عن نقطة ضعف ولم يجد واحدة واضحة.",
+    ],
+}
+
+NEAR_MISS_LINES_LOCAL = {
+    "English": [],
+    "French": [
+        "Tu étais tout près. Une bonne réponse de plus et les ballons étaient de sortie.",
+        "Résultat solide. Le modèle pointe un seul thème, pas l’ensemble de tes connaissances.",
+        "Résultat respectable. Renforce un thème et tu peux encore progresser.",
+    ],
+    "Arabic": [
+        "كنت قريبًا جدًا. إجابة صحيحة إضافية وكانت الاحتفالات ستبدأ.",
+        "نتيجة جيدة. النموذج يشير إلى موضوع واحد فقط، وليس إلى مستواك كله.",
+        "نتيجة محترمة. قوِّ موضوعًا واحدًا ويمكنك التقدم أكثر.",
+    ],
+}
+
+ROBOT_ROASTS_LOCAL = {
+    "English": [],
+    "French": [
+        "🤖 Mon modèle est presque certain que ce thème t’a posé problème. Il se trompe parfois, alors prends son avis avec recul.",
+        "🤖 J’ai signalé un thème faible avec trois nombres et une ligne droite. Je ne suis pas exactement un conseiller pédagogique.",
+        "🤖 En ma défense, j’ai été entraîné sur 6 000 élèves qui n’existent pas. Tu es mon premier élève réel.",
+    ],
+    "Arabic": [
+        "🤖 نموذجي شبه متأكد من أن هذا الموضوع كان صعبًا عليك. لكنه قد يخطئ، فلا تأخذ حكمه كحقيقة مطلقة.",
+        "🤖 حدّدت موضوعًا ضعيفًا باستخدام ثلاثة أرقام وخط مستقيم. لست مستشارًا تربويًا تمامًا.",
+        "🤖 دفاعًا عن نفسي، تدرّبت على 6000 طالب غير موجودين. أنت أول طالب حقيقي أتعامل معه.",
+    ],
+}
+
+# Extra UI strings used throughout the app. Internal values remain English; only
+# the student-facing presentation changes with the selected language.
+LANG_TEXT_EXTRA = {
+    "English": {
+        "subject_field": "Subject", "something_else": "✨ Something else (type it below)",
+        "custom_placeholder": "e.g. Psychology, Trigonometry, Neurobiology",
+        "please_subject": "Please enter a subject first. 🙂",
+        "creating": "🪄 Creating a fresh {course} challenge…",
+        "progress_ready": "🎮 0 / {total} answered · Ready, set, go!",
+        "learner": "Learner level", "language_value": "Language",
+        "select_every": "Select every answer you think is correct…",
+        "answer_for": "Answer for question {idx}", "answers_for": "Answers for question {idx}",
+        "your_response": "Your response for question {idx}",
+        "question_word": "Question", "think_default": "Think about the core concept this question is testing.",
+        "scoring": "🧮 Scoring and building your study plan...",
+        "thinking": "🤖 Thinking...", "retake_building": "🪄 Building another round with fresh questions…",
+        "focus_topic": "🎯 Focus topic", "challenge_meter": "🕹️ Challenge meter · {score}",
+        "total_xp": "🏅 Total XP: {xp} &nbsp; • &nbsp; 🎯 Keep your streak alive!",
+        "you": "You", "correct_reference": "Correct/reference", "correct_word": "Correct",
+        "offline_detail": "Offline typed-response grading: {detail}",
+        "multiple_levels": "🎓 Multiple levels selected — the challenge will blend their depth.",
+        "english_default": "English is the default language.",
+        "q_label": "Q{idx} / {total}",
+        "seconds": "{seconds}s", "per_question": "{seconds}s per question",
+        "typed_response": "Typed response", "single_choice": "Single choice",
+        "proficient": "Proficient", "weak": "Weak / Needs Intervention",
+        "api_error": "The live tutor needs a working Anthropic API key. You can still use the quiz, hints, review, and offline study plan without one.",
+        "tutor_error": "The tutor hit an API error, so I could not answer that message right now.",
+        "tutor_empty": "I didn't get a usable response from the tutor. Try asking again.",
+        "no_answer": "No answer was entered.",
+        "close_answer": "You are close. Add the key idea from the reference answer in your own words.",
+        "nice_answer": "Nice! Your response captured the main idea.",
+        "challenge_xp": "Challenge XP", "header_badge": "🏅 Learn • Play • Improve",
+        "progress": "🎮 {answered} / {total} answered · Ready, set, go!",
+        "translation_failed": "The translation could not be completed, so the original text was kept.",
+        "left_blank": "(left blank)",
+        "unrecognized_answer": "(unrecognized answer)",
+    },
+    "French": {
+        "subject_field": "Matière", "something_else": "✨ Autre matière (écris-la ci-dessous)",
+        "custom_placeholder": "ex. Psychologie, Trigonométrie, Neurobiologie",
+        "please_subject": "Veuillez d’abord saisir une matière. 🙂",
+        "creating": "🪄 Création d’un nouveau défi de {course}…",
+        "progress_ready": "🎮 0 / {total} réponse(s) · Prêt, c’est parti !",
+        "learner": "Niveau d’études", "language_value": "Langue",
+        "select_every": "Sélectionne toutes les réponses que tu penses correctes…",
+        "answer_for": "Réponse à la question {idx}", "answers_for": "Réponses à la question {idx}",
+        "your_response": "Ta réponse à la question {idx}",
+        "question_word": "Question", "think_default": "Réfléchis au concept principal testé par cette question.",
+        "scoring": "🧮 Évaluation et création de ton plan de révision…",
+        "thinking": "🤖 Réflexion…", "retake_building": "🪄 Création d’une nouvelle série de questions…",
+        "focus_topic": "🎯 Thème à renforcer", "challenge_meter": "🕹️ Jauge du défi · {score}",
+        "total_xp": "🏅 XP total : {xp} &nbsp; • &nbsp; 🎯 Garde ta série !",
+        "you": "Toi", "correct_reference": "Réponse correcte/de référence", "correct_word": "Correct",
+        "offline_detail": "Évaluation hors ligne des réponses écrites : {detail}",
+        "multiple_levels": "🎓 Plusieurs niveaux sont sélectionnés — le défi combinera leurs niveaux de difficulté.",
+        "english_default": "L’anglais est la langue par défaut.",
+        "q_label": "Q{idx} / {total}", "seconds": "{seconds}s", "per_question": "{seconds}s par question",
+        "typed_response": "Réponse écrite", "single_choice": "Une seule bonne réponse",
+        "proficient": "Maîtrisé", "weak": "À renforcer",
+        "api_error": "Le tuteur en direct nécessite une clé API Anthropic valide. Tu peux quand même utiliser le quiz, les indices, la correction et le plan hors ligne.",
+        "tutor_error": "Le tuteur a rencontré une erreur API et ne peut pas répondre à ce message pour le moment.",
+        "tutor_empty": "Je n’ai pas reçu de réponse utilisable du tuteur. Essaie à nouveau.",
+        "no_answer": "Aucune réponse n’a été saisie.",
+        "close_answer": "Tu es proche. Ajoute l’idée clé de la réponse de référence avec tes propres mots.",
+        "nice_answer": "Bien joué ! Ta réponse contient l’idée principale.",
+        "challenge_xp": "XP du défi", "header_badge": "🏅 Apprendre • Jouer • Progresser",
+        "progress": "🎮 {answered} / {total} réponses · Prêt, c’est parti !",
+        "translation_failed": "La traduction n’a pas pu être terminée ; le texte d’origine a été conservé.",
+        "left_blank": "(sans réponse)",
+        "unrecognized_answer": "(réponse non reconnue)",
+    },
+    "Arabic": {
+        "subject_field": "المادة", "something_else": "✨ مادة أخرى (اكتبها أدناه)",
+        "custom_placeholder": "مثل: علم النفس، علم المثلثات، علم الأعصاب",
+        "please_subject": "يرجى إدخال اسم المادة أولًا. 🙂",
+        "creating": "🪄 جارٍ إنشاء تحدٍّ جديد في {course}…",
+        "progress_ready": "🎮 0 / {total} تمت الإجابة · هيا بنا!",
+        "learner": "المستوى الدراسي", "language_value": "اللغة",
+        "select_every": "اختر كل الإجابات التي تعتقد أنها صحيحة…",
+        "answer_for": "الإجابة عن السؤال {idx}", "answers_for": "الإجابات عن السؤال {idx}",
+        "your_response": "إجابتك عن السؤال {idx}",
+        "question_word": "سؤال", "think_default": "فكّر في المفهوم الأساسي الذي يختبره هذا السؤال.",
+        "scoring": "🧮 جارٍ تقييم الإجابات وبناء خطة الدراسة…",
+        "thinking": "🤖 جارٍ التفكير…", "retake_building": "🪄 جارٍ إنشاء جولة جديدة بأسئلة مختلفة…",
+        "focus_topic": "🎯 الموضوع الذي يحتاج إلى تعزيز", "challenge_meter": "🕹️ مقياس التحدي · {score}",
+        "total_xp": "🏅 مجموع XP: {xp} &nbsp; • &nbsp; 🎯 حافظ على سلسلة التعلّم!",
+        "you": "إجابتك", "correct_reference": "الإجابة الصحيحة/المرجعية", "correct_word": "صحيح",
+        "offline_detail": "تقييم الإجابات الكتابية دون اتصال: {detail}",
+        "multiple_levels": "🎓 تم اختيار أكثر من مستوى — سيجمع التحدي بين مستويات الصعوبة الخاصة بها.",
+        "english_default": "الإنجليزية هي اللغة الافتراضية.",
+        "q_label": "س{idx} / {total}", "seconds": "{seconds}ث", "per_question": "{seconds}ث لكل سؤال",
+        "typed_response": "إجابة كتابية", "single_choice": "إجابة واحدة صحيحة",
+        "proficient": "متقن", "weak": "يحتاج إلى تعزيز",
+        "api_error": "يحتاج المدرس المباشر إلى مفتاح Anthropic API صالح. يمكنك مع ذلك استخدام الاختبار والتلميحات والمراجعة وخطة الدراسة دون اتصال.",
+        "tutor_error": "واجه المدرس خطأ في واجهة API، لذلك لا يمكنه الإجابة عن هذه الرسالة الآن.",
+        "tutor_empty": "لم أتلقَّ إجابة قابلة للاستخدام من المدرس. حاول مرة أخرى.",
+        "no_answer": "لم تتم كتابة أي إجابة.",
+        "close_answer": "أنت قريب من الإجابة. أضف الفكرة الأساسية من الإجابة المرجعية بأسلوبك الخاص.",
+        "nice_answer": "أحسنت! إجابتك عبّرت عن الفكرة الأساسية.",
+        "challenge_xp": "XP التحدي", "header_badge": "🏅 تعلّم • العب • تطوّر",
+        "progress": "🎮 {answered} / {total} تمت الإجابة · هيا بنا!",
+        "translation_failed": "تعذّرت إكمال الترجمة، لذلك تم الإبقاء على النص الأصلي.",
+        "left_blank": "(بدون إجابة)",
+        "unrecognized_answer": "(إجابة غير معروفة)",
+    },
+}
+for _lang, _extra in LANG_TEXT_EXTRA.items():
+    LANG_TEXT[_lang].update(_extra)
+
+# The product name is intentionally never translated.
+for _lang in LANG_TEXT:
+    LANG_TEXT[_lang]["header_title"] = "📘 AI Study Buddy 🎮"
+
+
 def tr(key: str, **kwargs: Any) -> str:
     language = st.session_state.get("language", "English")
     text = LANG_TEXT.get(language, LANG_TEXT["English"]).get(key, LANG_TEXT["English"].get(key, key))
@@ -193,6 +406,114 @@ def language_instruction() -> str:
     if language == "French":
         return "Write all student-facing content in French. Preserve scientific names, formulas, and necessary English terms when useful."
     return "Write all student-facing content in English."
+
+def language_name(value: str) -> str:
+    language = st.session_state.get("language", "English")
+    return LANGUAGE_LABELS.get(language, LANGUAGE_LABELS["English"]).get(value, value)
+
+
+def localized_level(value: str) -> str:
+    language = st.session_state.get("language", "English")
+    return LEVEL_LABELS.get(language, LEVEL_LABELS["English"]).get(value, value)
+
+
+def localized_subject(value: str) -> str:
+    language = st.session_state.get("language", "English")
+    return SUBJECT_LABELS.get(language, SUBJECT_LABELS["English"]).get(value, value)
+
+
+def localized_difficulty(value: int) -> str:
+    language = st.session_state.get("language", "English")
+    return DIFFICULTY_LABELS_LOCAL.get(language, DIFFICULTY_LABELS_LOCAL["English"]).get(value, str(value))
+
+
+def localized_question_type(qtype: str) -> str:
+    return {
+        "mcq": tr("mcq"), "single_choice": tr("single"),
+        "multi_select": tr("multi"), "short_answer": tr("typed"),
+    }.get(qtype, tr("question_word"))
+
+def localized_status(status: str) -> str:
+    return tr("weak") if status == "Weak / Needs Intervention" else tr("proficient")
+
+
+def localized_course_name(api_key: str, course: str) -> str:
+    if course in COURSES:
+        return localized_subject(course)
+    return translate_plain_text(api_key, course)
+
+
+def localized_line(kind: str) -> str:
+    language = st.session_state.get("language", "English")
+    pools = {
+        "win": VICTORY_LINES,
+        "near": NEAR_MISS_LINES,
+        "rough": ROBOT_ROASTS,
+    }
+    local_pools = {
+        "win": VICTORY_LINES_LOCAL, "near": NEAR_MISS_LINES_LOCAL, "rough": ROBOT_ROASTS_LOCAL,
+    }
+    if language == "English":
+        return random.choice(pools[kind])
+    return random.choice(local_pools[kind][language])
+
+
+def translate_plain_text(api_key: str, text: str, target_language: Optional[str] = None) -> str:
+    """Translate one dynamic student-facing string, cached for the current session."""
+    language = target_language or st.session_state.get("language", "English")
+    if language == "English" or not text.strip():
+        return text
+    cache = st.session_state.setdefault("translation_cache", {})
+    cache_key = f"{language}::{text}"
+    if cache_key in cache:
+        return cache[cache_key]
+    client, _ = get_client(api_key)
+    if client is None:
+        return text
+    prompt = (
+        f"Translate the following student-facing text into {language}. Preserve emojis, numbers, "
+        "percentages, punctuation, Markdown markers, and placeholders exactly. Do not add commentary. "
+        "Return only the translation.\n\nTEXT:\n" + text
+    )
+    try:
+        response = client.messages.create(
+            model=CLAUDE_MODEL, max_tokens=max(300, min(1200, len(text) * 3)),
+            system="You are a precise educational translator. Produce natural, complete, grammatically correct text.",
+            messages=[{"role": "user", "content": prompt}],
+        )
+        translated = collect_text(response)
+        if translated:
+            cache[cache_key] = translated
+            return translated
+    except Exception:
+        pass
+    return text
+
+
+def translate_markdown(api_key: str, text: str) -> str:
+    """Translate dynamic Markdown while preserving its structure."""
+    return translate_plain_text(api_key, text)
+
+
+def localize_questions(api_key: str, questions: List[Dict[str, Any]]) -> Tuple[List[Dict[str, Any]], str]:
+    """Localize a stable English source quiz; never translate a previously translated quiz."""
+    language = st.session_state.get("language", "English")
+    source_copy = json.loads(json.dumps(questions, ensure_ascii=False))
+    if language == "English" or not st.session_state.get("translate_enabled"):
+        return source_copy, ""
+
+    cache = st.session_state.setdefault("question_translation_cache", {})
+    signature = json.dumps(source_copy, ensure_ascii=False, sort_keys=True)
+    cache_key = f"{language}::{signature}"
+    cached = cache.get(cache_key)
+    if cached:
+        return json.loads(json.dumps(cached, ensure_ascii=False)), ""
+
+    translated, detail = localize_questions_with_claude(api_key, source_copy)
+    if not detail and len(translated) == len(source_copy) and _validate_translated_questions(source_copy, translated):
+        cache[cache_key] = json.loads(json.dumps(translated, ensure_ascii=False))
+        return translated, ""
+    return source_copy, detail or tr("translation_failed")
 
 def slugify(value: str) -> str:
     return re.sub(r"[^a-z0-9]+", "_", value.lower()).strip("_")
@@ -992,21 +1313,21 @@ def question_is_correct(q: Dict[str, Any], answers: Dict[str, Any]) -> bool:
 def display_answer(q: Dict[str, Any], answer: Any, include_feedback: bool = False) -> str:
     if q.get("type") == "short_answer":
         if isinstance(answer, dict):
-            value = str(answer.get("response") or "(left blank)")
+            value = str(answer.get("response") or tr("left_blank"))
             feedback = str(answer.get("feedback") or "").strip()
             return f"{value}{(' — ' + feedback) if include_feedback and feedback else ''}"
-        return str(answer or "(left blank)")
+        return str(answer or tr("left_blank"))
     if answer is None or answer == []:
-        return "(left blank)"
+        return tr("left_blank")
     if q.get("type") == "multi_select":
         try:
             return ", ".join(str(q["options"][int(i)]) for i in sorted(answer))
         except (KeyError, TypeError, ValueError, IndexError):
-            return "(unrecognised answer)"
+            return tr("unrecognized_answer")
     try:
         return str(q["options"][int(answer)])
     except (KeyError, TypeError, ValueError, IndexError):
-        return "(unrecognised answer)"
+        return tr("unrecognized_answer")
 
 
 def _first_present(item: Dict[str, Any], keys: List[str]) -> Any:
@@ -1294,7 +1615,8 @@ def generate_questions_with_claude(api_key: str, course: str, avoid_questions: O
     avoid_block = "\n".join(f"- {q[:180]}" for q in avoid[-12:]) if avoid else "- none"
     user_message = (
         f"Subject: {course}\nLearner level: {level}\nTarget question count: {target}\n"
-        f"{language_instruction()}\nAvoid repeating these recent question stems when possible:\n{avoid_block}\n"
+        "Write all student-facing quiz content in English.\n"
+        f"Avoid repeating these recent question stems when possible:\n{avoid_block}\n"
         "Make the challenge playful, varied, meaningful, and academically sound. Include at least one multi_select question and one short_answer question."
     )
     try:
@@ -1337,36 +1659,127 @@ def generate_questions_with_claude(api_key: str, course: str, avoid_questions: O
     return questions, "claude", detail
 
 
+def _validate_translated_questions(source: List[Dict[str, Any]], translated: List[Dict[str, Any]]) -> bool:
+    """Strictly validate a translation so a bad Claude response never corrupts scoring."""
+    if len(source) != len(translated):
+        return False
+    for old, new in zip(source, translated):
+        if not isinstance(new, dict):
+            return False
+        if str(new.get("id")) != str(old.get("id")):
+            return False
+        if str(new.get("type")) != str(old.get("type")):
+            return False
+        # Choice answers are machine indices and MUST remain identical.
+        # Typed-response answers are natural language and SHOULD be translated.
+        if old.get("type") != "short_answer" and new.get("answer") != old.get("answer"):
+            return False
+        if old.get("type") == "short_answer" and (not isinstance(new.get("answer"), str) or not new["answer"].strip()):
+            return False
+        if "options" in old:
+            if not isinstance(new.get("options"), list) or len(new["options"]) != len(old["options"]):
+                return False
+        if not isinstance(new.get("question"), str) or not new["question"].strip():
+            return False
+        if not isinstance(new.get("subtopic"), str) or not new["subtopic"].strip():
+            return False
+        if not isinstance(new.get("hint"), str) or not new["hint"].strip():
+            return False
+    return True
+
+
 def localize_questions_with_claude(api_key: str, questions: List[Dict[str, Any]]) -> Tuple[List[Dict[str, Any]], str]:
-    """Translate a built-in quiz into the selected language while preserving answer indices."""
+    """Translate the complete quiz, including questions, choices, hints and typed answers."""
     language = st.session_state.get("language", "English")
-    if language == "English" or not api_key.strip():
-        return questions, "" if language == "English" else tr("translation_offline")
+    if language == "English":
+        return [json.loads(json.dumps(q, ensure_ascii=False)) for q in questions], ""
+    if not api_key.strip():
+        return questions, tr("translation_offline")
+
     client, err = get_client(api_key)
     if client is None:
         return questions, err
+
     payload = []
     for q in questions:
-        payload.append({"id": q["id"], "type": q["type"], "subtopic": q["subtopic"], "question": q["question"],
-                        "options": q.get("options"), "hint": q.get("hint"), "answer": q.get("answer"),
-                        "answer_keywords": q.get("answer_keywords")})
-    prompt = ("Translate every student-facing string into the chosen language. Keep IDs, type, answer indices, option order, "
-              "and JSON structure unchanged. For typed responses, translate the reference answer and keywords. "
-              f"{language_instruction()} Return ONLY a JSON array.\nJSON:\n{json.dumps(payload, ensure_ascii=False)}")
-    try:
-        resp = client.messages.create(model=CLAUDE_MODEL, max_tokens=QUIZ_MAX_TOKENS,
-                                      system="You are a careful educational translator. Never change answer values or option order.",
-                                      messages=[{"role": "user", "content": prompt}])
-        block = extract_json_array(collect_text(resp))
-        data = json.loads(block) if block else None
-        translated, problems = coerce_questions(data) if data is not None else ([], ["No translated JSON returned."])
-        if len(translated) == len(questions):
-            for old, new in zip(questions, translated):
-                new["id"] = old["id"]
-            return translated, ""
-        return questions, "; ".join(problems) or "Translation response did not preserve the full quiz."
-    except Exception as exc:
-        return questions, f"{type(exc).__name__}: {exc}"
+        item = {
+            "id": q["id"],
+            "type": q.get("type", "mcq"),
+            "subtopic": q.get("subtopic", "General"),
+            "question": q.get("question", ""),
+            "hint": q.get("hint", ""),
+            "answer": q.get("answer"),
+        }
+        if "options" in q:
+            item["options"] = q["options"]
+        if "answer_keywords" in q:
+            item["answer_keywords"] = q["answer_keywords"]
+        payload.append(item)
+
+    json_payload = json.dumps(payload, ensure_ascii=False)
+    prompt = f"""Translate EVERY student-facing natural-language field in this quiz from English to {language}.
+
+STRICT RULES:
+- Translate question, subtopic, every option, hint, typed-response reference answer, and answer_keywords.
+- NEVER translate or alter id.
+- NEVER translate or alter type.
+- NEVER alter answer indices for MCQ/multi-select. Preserve their exact numeric values and option order.
+- For short_answer, translate the reference answer and keywords, but keep the answer text as a string.
+- Do not summarize, shorten, omit, or rewrite content into a shorter form.
+- Preserve formulas, numbers, units, scientific names, and necessary technical terms accurately.
+- Return the EXACT same number of objects and the same JSON structure.
+- Return ONLY valid JSON. No markdown, no commentary.
+
+QUIZ JSON:
+{json_payload}"""
+
+    system = (
+        "You are a meticulous educational translator. Your job is complete, faithful translation, "
+        "not summarization. Never drop words or fields. Preserve machine-readable fields exactly. "
+        "Use natural, age-appropriate language in the requested target language."
+    )
+
+    last_error = "Translation failed."
+    for attempt in range(2):
+        try:
+            resp = client.messages.create(
+                model=CLAUDE_MODEL,
+                max_tokens=max(3500, min(8000, len(json_payload) * 3)),
+                system=system,
+                messages=[{"role": "user", "content": prompt}],
+            )
+            raw = collect_text(resp)
+            block = extract_json_array(raw)
+            data = json.loads(block) if block else None
+            if isinstance(data, list):
+                translated, problems = coerce_questions(data)
+                if _validate_translated_questions(questions, translated):
+                    # Restore immutable machine fields from the English source while keeping
+                    # all translated student-facing fields from Claude.
+                    final = []
+                    for old, new in zip(questions, translated):
+                        item = dict(new)
+                        item["id"] = old["id"]
+                        item["type"] = old.get("type", "mcq")
+                        if old.get("type") != "short_answer":
+                            item["answer"] = old.get("answer")
+                        # For typed responses, keep Claude's translated reference answer.
+                        item["difficulty"] = old.get("difficulty", 2)
+                        if "options" in old:
+                            item["options"] = [str(x) for x in new["options"]]
+                        if "answer_keywords" in old:
+                            item["answer_keywords"] = [str(x) for x in new.get("answer_keywords", old["answer_keywords"])]
+                        final.append(item)
+                    return final, ""
+                last_error = "; ".join(problems) or "Claude changed protected quiz fields or omitted content."
+            else:
+                last_error = "Claude did not return a JSON array."
+        except Exception as exc:
+            last_error = f"{type(exc).__name__}: {exc}"
+        # Second pass explicitly tells the model to repair the failed response.
+        prompt = prompt + "\n\nIMPORTANT: The previous translation was invalid. Return the COMPLETE JSON array with every object and field preserved."
+
+    return questions, last_error
 
 
 # ----------------------------------------------------------------------------------
@@ -1421,8 +1834,9 @@ def init_state() -> None:
         "submitted": False, "results": None, "question_source": "local",
         "generation_detail": "", "connection_message": "", "connection_ok": None,
         "celebrated": False, "short_answer_grading_detail": "", "tutor_messages": [],
-        "language": "English", "translate_enabled": False, "education_level": "High School",
+        "language": "English", "language_selector": "English", "translate_enabled": False, "education_level": "High School",
         "quiz_history": {}, "hint_count": 0, "challenge_xp": 0, "xp_awarded_for_round": False,
+        "translation_cache": {}, "question_translation_cache": {},
     }
     for key, value in defaults.items():
         st.session_state.setdefault(key, value)
@@ -1496,7 +1910,7 @@ def fallback_short_answer_grade(response: str, q: Dict[str, Any]) -> Dict[str, A
     """Offline concept grader: generous with wording, strict about having the core idea."""
     text = _normalise_text(response)
     if not text:
-        return {"correct": False, "score": 0.0, "feedback": "No answer was entered."}
+        return {"correct": False, "score": 0.0, "feedback": tr("no_answer")}
     reference = _normalise_text(str(q.get("answer", "")))
     keywords = [_normalise_text(k) for k in q.get("answer_keywords", []) if _normalise_text(k)]
     reference_words = set(reference.split())
@@ -1507,9 +1921,9 @@ def fallback_short_answer_grade(response: str, q: Dict[str, Any]) -> Dict[str, A
     score = max(overlap, keyword_ratio)
     correct = score >= 0.45 or (keywords and keyword_hits >= max(1, min(2, len(keywords))))
     if correct:
-        feedback = "Nice! Your response captured the main idea."
+        feedback = tr("nice_answer")
     else:
-        feedback = "You are close. Add the key idea from the reference answer in your own words."
+        feedback = tr("close_answer")
     return {"correct": bool(correct), "score": float(min(1.0, score)), "feedback": feedback}
 
 
@@ -1524,7 +1938,7 @@ def evaluate_short_answers_with_claude(api_key: str, course: str, questions: Lis
     }
     client, err = get_client(api_key)
     if client is None:
-        return fallback, f"Offline typed-response grading: {err}"
+        return fallback, tr("offline_detail", detail=err)
     packet = []
     for q in typed:
         raw = answers.get(q["id"], "")
@@ -1654,7 +2068,12 @@ def inject_css() -> None:
       input::placeholder,textarea::placeholder { color:#69778C !important; opacity:1 !important; }
       [data-baseweb="select"]>div,[data-baseweb="select"] *,[data-baseweb="popover"],[data-baseweb="popover"] *,[role="listbox"] * { background:#FFFFFF !important; color:#17223B !important; }
       [role="option"]:hover { background:#E7F8F3 !important; color:#10203A !important; }
+      [data-baseweb="select"] *, [role="option"], [role="option"] * { white-space:normal !important; overflow:visible !important; text-overflow:clip !important; }
+      [data-testid="stRadio"] label, [data-testid="stRadio"] label *, [data-testid="stCheckbox"] label, [data-testid="stCheckbox"] label *, [data-testid="stMultiSelect"] * { white-space:normal !important; overflow:visible !important; text-overflow:clip !important; }
+      input, textarea, [contenteditable="true"] { text-overflow:clip !important; }
       [data-testid="stRadio"] label *,[data-testid="stCheckbox"] label *,[data-testid="stMultiSelect"] label *,[data-testid="stTextArea"] label * { color:#17223B !important; }
+      [data-testid="stSelectbox"] *,[data-testid="stRadio"] *,[data-testid="stCheckbox"] *,[data-testid="stMultiSelect"] *,[data-testid="stTextInput"] *,[data-testid="stTextArea"] * { overflow:visible !important; text-overflow:clip !important; }
+      [data-baseweb="select"] [class*="ellipsis"], [data-baseweb="select"] [class*="singleValue"] { overflow:visible !important; text-overflow:clip !important; white-space:normal !important; }
       [data-testid="stRadio"] label:hover,[data-testid="stCheckbox"] label:hover { color:#0A7E6B !important; }
       [data-testid="stChatMessage"] { border:1px solid #D7DEE8 !important; border-radius:18px !important; background:#FFFFFF !important; box-shadow:0 8px 22px rgba(31,52,86,.06); }
       [data-testid="stChatMessage"] *,[data-testid="stChatMessage"] p,[data-testid="stChatMessage"] li { color:#17223B !important; }
@@ -1710,7 +2129,7 @@ def render_header() -> None:
     st.markdown(
         f'<div class="asb-band"><h1>{tr("header_title")}</h1>'
         f'<p>{tr("header_body")}</p>'
-        '<span class="asb-band-badge">🏅 Learn • Play • Improve</span></div>',
+        f'<span class="asb-band-badge">{tr("header_badge")}</span></div>', 
         unsafe_allow_html=True)
 
 
@@ -1793,32 +2212,36 @@ def render_preferences() -> None:
         if key not in st.session_state:
             st.session_state[key] = level == st.session_state.get("education_level", "High School")
         with cols[i % 4]:
-            st.checkbox(level, key=key)
+            st.checkbox(localized_level(level), key=key)
 
-    # Keep the checkbox UI requested by the competition brief, but do not mutate
-    # widget state from callbacks (which can cause Streamlit widget-state errors).
     selected_levels = [level for level in EDUCATION_LEVELS
                        if st.session_state.get(f"edu_{slugify(level)}", False)]
     if len(selected_levels) == 1:
         st.session_state["education_level"] = selected_levels[0]
     elif len(selected_levels) > 1:
         st.session_state["education_level"] = " + ".join(selected_levels)
-        st.info("🎓 Multiple levels selected — the challenge will blend their depth.")
+        st.info(tr("multiple_levels"))
     else:
-        # Never leave the AI prompt without a usable level.
         st.session_state["education_level"] = st.session_state.get("education_level", "High School")
 
     st.divider()
     st.checkbox(tr("translate"), key="translate_enabled")
     if st.session_state.get("translate_enabled"):
-        choice = st.selectbox(tr("language"), ["English", "French", "Arabic"], index=["English", "French", "Arabic"].index(language))
-        st.session_state["language"] = choice
+        language_options = ["English", "French", "Arabic"]
+        choice = st.selectbox(
+            tr("language"), language_options, key="language_selector",
+            format_func=language_name)
+        if choice != language:
+            st.session_state["language"] = choice
+            # Re-render immediately so every visible string uses the new language.
+            st.rerun()
         if choice == "English":
-            st.info("English is the default language.")
+            st.info(tr("english_default"))
         else:
             st.info(tr("translation_ready") if get_configured_api_key().strip() else tr("translation_offline"))
     else:
         st.session_state["language"] = "English"
+        st.session_state["language_selector"] = "English"
     st.markdown(f'<div class="asb-fun">🎮 <b>{tr("setup_caption")}</b></div>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
@@ -1853,33 +2276,42 @@ def remember_recent_questions(course: str, questions: List[Dict[str, Any]]) -> N
 
 
 def prepare_questions_for_user(api_key: str, course: str) -> Tuple[List[Dict[str, Any]], str, str]:
+    """Always build/store an English source quiz, then localize that source if needed."""
     recent = get_recent_question_stems(course)
     if course in COURSES:
         questions = prepare_local_questions(course)
-        detail = ""
-        if st.session_state.get("translate_enabled") and st.session_state.get("language") != "English":
-            questions, detail = localize_questions_with_claude(api_key, questions)
-        return questions, "local", detail
-    questions, source, detail = generate_questions_with_claude(api_key, course, recent)
-    return questions, source, detail
+        source, detail = "local", ""
+    else:
+        # Claude generates the canonical source in English. Translation is a separate
+        # deterministic step, so switching languages never translates a translation.
+        questions, source, detail = generate_questions_with_claude(api_key, course, recent)
+    localized, translation_detail = localize_questions(api_key, questions)
+    if translation_detail:
+        detail = "; ".join(x for x in [detail, translation_detail] if x)
+    return localized, source, detail
 
 
 def render_course_picker(api_key: str) -> None:
     st.markdown(f"### {tr('subject')}")
     with st.form("course_form"):
-        labelled = {f"{SUBJECT_EMOJI.get(name, '📕')}  {name}": name for name in COURSES}
-        other = "✨  Something else (type it below)"
-        choice = st.selectbox("Subject", list(labelled) + [other])
-        custom_course = st.text_input(tr("custom_subject"), placeholder="e.g. Psychology, Trigonometry, Neurobiology")
+        course_options = list(COURSES.keys())
+        other = "__OTHER__"
+        choice = st.selectbox(
+            tr("subject_field"), course_options + [other],
+            format_func=lambda value: tr("something_else") if value == other else f"{SUBJECT_EMOJI.get(value, '📕')}  {localized_subject(value)}"
+        )
+        custom_course = st.text_input(
+            tr("custom_subject"), placeholder=tr("custom_placeholder"))
         load = st.form_submit_button(tr("start"), type="primary", use_container_width=True)
     st.caption(tr("custom_caption"))
     if not load:
         return
-    course_name = labelled[choice] if choice != other else custom_course.strip()
+    course_name = choice if choice != other else custom_course.strip()
     if not course_name:
-        st.warning("Please enter a subject first. 🙂")
+        st.warning(tr("please_subject"))
         return
-    with st.spinner(f"🪄 Creating a fresh {course_name} challenge…"):
+    display_name = localized_subject(course_name) if course_name in COURSES else course_name
+    with st.spinner(tr("creating", course=display_name)):
         questions, source, detail = prepare_questions_for_user(api_key, course_name)
     remember_recent_questions(course_name, questions)
     start_quiz(course_name, questions, source, detail)
@@ -1891,32 +2323,51 @@ def render_quiz() -> Optional[Dict[str, Any]]:
     course = st.session_state["course"]
     total = len(questions)
     subtopics = list(dict.fromkeys(q["subtopic"] for q in questions))
-    st.markdown(f"### {SUBJECT_EMOJI.get(course, '📕')} {safe_md(course)} · {tr('quiz_ready')}")
-    st.progress(0.0, text=f"🎮 0 / {total} answered · Ready, set, go!")
+    display_course = localized_course_name(get_configured_api_key(), course)
+    st.markdown(f"### {SUBJECT_EMOJI.get(course, '📕')} {safe_md(display_course)} · {tr('quiz_ready')}")
+    answered_now = 0
+    for q in questions:
+        value = st.session_state.get(f"short_input_{q['id']}") if q.get("type") == "short_answer" else st.session_state.get(f"multi_{q['id']}", st.session_state.get(f"radio_{q['id']}"))
+        if isinstance(value, str):
+            answered_now += bool(value.strip())
+        elif value not in (None, []):
+            answered_now += 1
+    st.progress(answered_now / max(total, 1), text=tr("progress", answered=answered_now, total=total))
     st.markdown(f'<div class="asb-fun">🔥 {tr("fun_tip")}</div>', unsafe_allow_html=True)
-    st.caption(f"{total} {tr('questions')} · {len(subtopics)} {tr('topics')} · 🎓 {st.session_state.get('education_level')} · 🌍 {st.session_state.get('language')}")
+    level_display = " + ".join(localized_level(x) for x in str(st.session_state.get("education_level", "High School")).split(" + "))
+    language_display = language_name(st.session_state.get("language", "English"))
+    st.caption(f"{total} {tr('questions')} · {len(subtopics)} {tr('topics')} · 🎓 {level_display} · 🌍 {language_display}")
     if st.session_state.get("generation_detail"):
-        st.info(st.session_state["generation_detail"])
+        st.info(translate_plain_text(get_configured_api_key(), st.session_state["generation_detail"]))
 
     with st.form("quiz_form"):
         collected: Dict[str, Any] = {}
         for idx, q in enumerate(questions, start=1):
             qtype = q.get("type", "mcq")
-            type_label = {"mcq": tr("mcq"), "single_choice": tr("single"), "multi_select": tr("multi"), "short_answer": tr("typed")}.get(qtype, "Question")
+            type_label = localized_question_type(qtype)
+            difficulty = localized_difficulty(q.get("difficulty", 2))
             st.markdown('<div class="asb-qcard">', unsafe_allow_html=True)
             st.markdown(
-                f'<span class="asb-qnum">Q{idx} / {total} · {safe_md(q["subtopic"])} · {type_label} · {DIFFICULTY_EMOJI.get(q["difficulty"], "🟡")} {DIFFICULTY_LABELS.get(q["difficulty"], "Medium")}</span>',
+                f'<span class="asb-qnum">{tr("q_label", idx=idx, total=total)} · {safe_md(q["subtopic"])} · {type_label} · {DIFFICULTY_EMOJI.get(q["difficulty"], "🟡")} {difficulty}</span>',
                 unsafe_allow_html=True)
             st.markdown(f'<div class="asb-question">{safe_md(q["question"])}</div>', unsafe_allow_html=True)
             with st.expander(tr("hint"), expanded=False):
-                st.info(safe_md(q.get("hint", "Think about the core concept this question is testing.")))
+                st.info(safe_md(q.get("hint", tr("think_default"))))
             if qtype == "short_answer":
-                collected[q["id"]] = st.text_area(f"Your response for question {idx}", key=f"short_input_{q['id']}", placeholder=tr("answer_placeholder"), height=120, label_visibility="collapsed")
+                collected[q["id"]] = st.text_area(
+                    tr("your_response", idx=idx), key=f"short_input_{q['id']}",
+                    placeholder=tr("answer_placeholder"), height=120, label_visibility="collapsed")
             elif qtype == "multi_select":
-                chosen = st.multiselect(f"Answers for question {idx}", list(range(len(q["options"]))), format_func=lambda i, opts=q["options"]: safe_md(opts[i]), key=f"multi_{q['id']}", placeholder="Select every answer you think is correct…")
+                chosen = st.multiselect(
+                    tr("answers_for", idx=idx), list(range(len(q["options"]))),
+                    format_func=lambda i, opts=q["options"]: safe_md(opts[i]),
+                    key=f"multi_{q['id']}", placeholder=tr("select_every"))
                 collected[q["id"]] = chosen
             else:
-                collected[q["id"]] = st.radio(f"Answer for question {idx}", options=list(range(len(q["options"]))), format_func=lambda i, opts=q["options"]: safe_md(opts[i]), index=None, key=f"radio_{q['id']}", label_visibility="collapsed")
+                collected[q["id"]] = st.radio(
+                    tr("answer_for", idx=idx), options=list(range(len(q["options"]))),
+                    format_func=lambda i, opts=q["options"]: safe_md(opts[i]), index=None,
+                    key=f"radio_{q['id']}", label_visibility="collapsed")
             st.markdown('</div>', unsafe_allow_html=True)
         submitted = st.form_submit_button(tr("submit"), type="primary", use_container_width=True)
     if submitted:
@@ -1986,8 +2437,7 @@ def ask_tutor_claude(api_key: str, context: str, history: List[Dict[str, str]],
                      user_message: str) -> Tuple[str, str]:
     client, err = get_client(api_key)
     if client is None:
-        return ("The live tutor needs a working Anthropic API key. You can still use the "
-                "quiz, hints, review, and offline study plan without one.", err)
+        return tr("api_error"), err
 
     messages: List[Dict[str, str]] = []
     for item in history[-10:]:
@@ -1998,15 +2448,15 @@ def ask_tutor_claude(api_key: str, context: str, history: List[Dict[str, str]],
         response = client.messages.create(
             model=CLAUDE_MODEL,
             max_tokens=CHAT_MAX_TOKENS,
-            system=TUTOR_SYSTEM_PROMPT + "\n\nQUIZ CONTEXT:\n" + context,
+            system=TUTOR_SYSTEM_PROMPT + "\n" + language_instruction() + "\n\nQUIZ CONTEXT:\n" + context,
             messages=messages,
         )
         text = collect_text(response)
         if not text:
-            return "I didn't get a usable response from the tutor. Try asking again.", "Claude returned an empty reply."
+            return tr("tutor_empty"), "Claude returned an empty reply."
         return text, ""
     except Exception as exc:  # noqa: BLE001
-        return "The tutor hit an API error, so I could not answer that message right now.", f"{type(exc).__name__}: {exc}"
+        return tr("tutor_error"), f"{type(exc).__name__}: {exc}"
 
 
 
@@ -2031,12 +2481,12 @@ def render_tutor_chat(results: Dict[str, Any], api_key: str) -> None:
 
     context = build_tutor_context(results)
     with st.chat_message("assistant"):
-        with st.spinner("🤖 Thinking..."):
+        with st.spinner(tr("thinking")):
             reply, detail = ask_tutor_claude(api_key, context, history, prompt)
         st.markdown(reply)
     st.session_state["tutor_messages"].append({"role": "assistant", "content": reply})
     if detail:
-        st.caption(detail)
+        st.caption(translate_plain_text(api_key, detail))
 
 
 def render_results(pipeline: Pipeline, results: Dict[str, Any]) -> None:
@@ -2044,53 +2494,70 @@ def render_results(pipeline: Pipeline, results: Dict[str, Any]) -> None:
     if not st.session_state["celebrated"]:
         celebrate(results)
         st.session_state["celebrated"] = True
+
+    # Product title and numeric score are intentionally left unchanged.
     st.markdown(f"### {tr('results')}")
+    display_course = localized_course_name(get_configured_api_key(), st.session_state["course"])
+    level_display = " + ".join(localized_level(x) for x in str(st.session_state.get("education_level", "High School")).split(" + "))
+    headline = GRADE_HEADLINES_LOCAL.get(st.session_state.get("language", "English"), GRADE_HEADLINES_LOCAL["English"]).get(grade["headline"], grade["headline"])
     st.markdown(
         f'<div class="asb-grade" style="--grade-color:{grade["color"]};">'
         f'<div class="letter">{grade["letter"]}</div>'
-        f'<div><div class="headline">{grade["emoji"]} {grade["headline"]} — {results["n_correct"]} / {results["n_questions"]}</div>'
-        f'<div class="sub">{safe_md(st.session_state["course"])} · {results["elapsed"]:.0f}s · 🎓 {safe_md(st.session_state.get("education_level", "High School"))}</div></div></div>',
+        f'<div><div class="headline">{grade["emoji"]} {headline} — {results["n_correct"]} / {results["n_questions"]}</div>'
+        f'<div class="sub">{safe_md(display_course)} · {tr("seconds", seconds=int(results["elapsed"]))} · 🎓 {safe_md(level_display)}</div></div></div>',
         unsafe_allow_html=True)
-    if grade["mood"] == "win":
-        st.success(random.choice(VICTORY_LINES))
-    elif grade["mood"] == "near":
-        st.info(random.choice(NEAR_MISS_LINES))
+    mood = grade["mood"]
+    if mood == "win":
+        st.success(localized_line("win"))
+    elif mood == "near":
+        st.info(localized_line("near"))
     else:
-        st.markdown(f'<div class="asb-roast">{random.choice(ROBOT_ROASTS)}</div>', unsafe_allow_html=True)
+        st.markdown(f'<div class="asb-roast">{localized_line("rough")}</div>', unsafe_allow_html=True)
+
     xp = 100 + results["n_correct"] * 25
-    # Streamlit reruns the script after chat input/button interactions. Award this
-    # round's XP only once, otherwise every rerun would inflate the student's total.
     if not st.session_state.get("xp_awarded_for_round", False):
         st.session_state["challenge_xp"] = st.session_state.get("challenge_xp", 0) + xp
         st.session_state["xp_awarded_for_round"] = True
     c1, c2, c3 = st.columns(3)
+    # Score is intentionally unchanged as requested.
     c1.metric("⭐ Score", f"{results['overall_accuracy']:.0%}")
-    c2.metric("🧠 Correct", f"{results['n_correct']}/{results['n_questions']}")
-    c3.metric("⚡ Challenge XP", f"+{xp}")
-    st.markdown(f'<div class="asb-xp">🏅 Total XP: {st.session_state["challenge_xp"]} &nbsp; • &nbsp; 🎯 Keep your streak alive!</div>', unsafe_allow_html=True)
+    c2.metric(f"🧠 {tr('correct_word')}", f"{results['n_correct']}/{results['n_questions']}")
+    c3.metric(f"⚡ {tr('challenge_xp')}", f"+{xp}")
+    st.markdown(tr("total_xp", xp=st.session_state["challenge_xp"]), unsafe_allow_html=True)
 
     st.markdown(
-        f'<div class="asb-topic"><div class="label">🎯 Focus topic</div><div class="value">{safe_md(results["weak_subtopic"])}</div></div>',
+        f'<div class="asb-topic"><div class="label">{tr("focus_topic")}</div><div class="value">{safe_md(results["weak_subtopic"])}</div></div>',
         unsafe_allow_html=True)
-    st.progress(results["overall_accuracy"], text=f"🕹️ Challenge meter · {results['overall_accuracy']:.0%}")
+    st.progress(results["overall_accuracy"], text=tr("challenge_meter", score=f"{results['overall_accuracy']:.0%}"))
 
     with st.expander(tr("review"), expanded=False):
         for i, item in enumerate(results["review"], start=1):
             mark = "✅" if item["is_correct"] else "❌"
-            st.markdown(f"**{mark} Q{i} · {safe_md(item['subtopic'])} · {safe_md(item['question_type'])}**")
+            qtype = localized_question_type({
+                "Typed response": "short_answer",
+                "Choose all correct": "multi_select",
+                "Multiple choice": "mcq",
+                "Single choice": "single_choice",
+            }.get(item["question_type"], item["question_type"]))
+            st.markdown(f"**{mark} Q{i} · {safe_md(item['subtopic'])} · {qtype}**")
             st.write(safe_md(item["question"]))
-            st.caption(f"You: {safe_md(item['your_answer'])}")
+            st.caption(f"{tr('you')}: {safe_md(item['your_answer'])}")
             if not item["is_correct"]:
-                st.caption(f"Correct/reference: {safe_md(item['correct_answer'])}")
+                st.caption(f"{tr('correct_reference')}: {safe_md(item['correct_answer'])}")
             if item.get("feedback"):
                 st.info(safe_md(item["feedback"]))
 
     st.markdown(f"#### {tr('study_plan')}")
-    st.markdown(results["tips_markdown"])
+    tips = results["tips_markdown"]
+    if st.session_state.get("language") != "English":
+        # Claude normally returns the selected language already. This cached pass also
+        # guarantees fallback/offline tips are translated and repairs accidental English output.
+        tips = translate_markdown(get_configured_api_key(), tips)
+    st.markdown(tips)
     st.caption(tr("results_ai") if results["tips_source"] == "claude" else tr("results_offline"))
     if st.session_state.get("short_answer_grading_detail"):
         with st.expander(tr("grading_details"), expanded=False):
-            st.caption(st.session_state["short_answer_grading_detail"])
+            st.caption(translate_plain_text(get_configured_api_key(), st.session_state["short_answer_grading_detail"]))
 
     render_tutor_chat(results, get_configured_api_key())
 
@@ -2098,7 +2565,7 @@ def render_results(pipeline: Pipeline, results: Dict[str, Any]) -> None:
     if col_a.button(tr("retake"), use_container_width=True):
         course = st.session_state["course"]
         api_key = get_configured_api_key()
-        with st.spinner("🪄 Building another round with fresh questions…"):
+        with st.spinner(tr("retake_building")):
             questions, source, detail = prepare_questions_for_user(api_key, course)
         remember_recent_questions(course, questions)
         start_quiz(course, questions, source, detail)
@@ -2125,7 +2592,7 @@ def main() -> None:
         collected = render_quiz()
         if collected is not None:
             st.session_state["answers"] = collected
-            with st.spinner("🧮 Scoring and building your study plan..."):
+            with st.spinner(tr("scoring")):
                 st.session_state["results"] = score_quiz(pipeline, api_key)
             st.session_state["submitted"] = True
             st.rerun()
