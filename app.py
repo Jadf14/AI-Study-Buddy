@@ -499,7 +499,10 @@ def localize_questions(api_key: str, questions: List[Dict[str, Any]]) -> Tuple[L
     """Localize a stable English source quiz; never translate a previously translated quiz."""
     language = st.session_state.get("language", "English")
     source_copy = json.loads(json.dumps(questions, ensure_ascii=False))
-    if language == "English" or not st.session_state.get("translate_enabled"):
+    # Once a non-English language is selected, localization is authoritative.
+    # Do not gate retakes on the setup checkbox state: Streamlit widget state can
+    # be recreated across reruns, while the selected quiz language must persist.
+    if language == "English":
         return source_copy, ""
 
     cache = st.session_state.setdefault("question_translation_cache", {})
