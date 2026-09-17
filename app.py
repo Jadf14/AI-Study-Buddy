@@ -477,7 +477,7 @@ def translate_plain_text(api_key: str, text: str, target_language: Optional[str]
     )
     try:
         response = client.messages.create(
-            model=CLAUDE_MODEL, max_tokens=max(300, min(1200, len(text) * 3)),
+            model=CLAUDE_MODEL, max_tokens=max(800, min(4000, len(text) * 5)),
             system="You are a precise educational translator. Produce natural, complete, grammatically correct text.",
             messages=[{"role": "user", "content": prompt}],
         )
@@ -490,9 +490,9 @@ def translate_plain_text(api_key: str, text: str, target_language: Optional[str]
     return text
 
 
-def translate_markdown(api_key: str, text: str) -> str:
+def translate_markdown(api_key: str, text: str, target_language: Optional[str] = None) -> str:
     """Translate dynamic Markdown while preserving its structure."""
-    return translate_plain_text(api_key, text)
+    return translate_plain_text(api_key, text, target_language=target_language)
 
 
 def localize_questions(api_key: str, questions: List[Dict[str, Any]]) -> Tuple[List[Dict[str, Any]], str]:
@@ -1808,7 +1808,8 @@ def fetch_claude_tips(api_key: str, course: str, subtopic: str,
 
     missed_block = "\n".join(f"- {q}" for q in missed_questions) or "- (no specific misses)"
     user_message = (f"Course: {course}\nLearner level: {st.session_state.get('education_level', 'High School')}\n"
-                    f"Weak sub-topic: {subtopic}\n{language_instruction()}\n"
+                    f"Weak sub-topic: {subtopic}\n"
+                    "Write the study plan in English. This is the canonical source; the app will translate it for the selected language.\n"
                     f"Missed questions:\n{missed_block}")
     try:
         response = client.messages.create(
@@ -1837,6 +1838,7 @@ def init_state() -> None:
         "language": "English", "language_selector": "English", "translate_enabled": False, "education_level": "High School",
         "quiz_history": {}, "hint_count": 0, "challenge_xp": 0, "xp_awarded_for_round": False,
         "translation_cache": {}, "question_translation_cache": {},
+        "source_questions": [], "quiz_language": "English",
     }
     for key, value in defaults.items():
         st.session_state.setdefault(key, value)
@@ -1855,6 +1857,11 @@ def clear_radio_keys() -> None:
 
 def start_quiz(course: str, questions: List[Dict[str, Any]], source: str, detail: str = "") -> None:
     clear_radio_keys()
+    canonical = st.session_state.pop("pending_source_questions", None)
+    if not canonical:
+        # Backward-safe fallback for any caller that already has a quiz loaded.
+        canonical = json.loads(json.dumps(questions, ensure_ascii=False))
+    canonical = json.loads(json.dumps(canonical, ensure_ascii=False))
     history = st.session_state.setdefault("quiz_history", {})
     existing = history.setdefault(course, set())
     if not isinstance(existing, set):
@@ -1862,7 +1869,8 @@ def start_quiz(course: str, questions: List[Dict[str, Any]], source: str, detail
         history[course] = existing
     existing.update(question_signature(q) for q in questions)
     st.session_state.update({
-        "course": course, "questions": questions, "question_source": source,
+        "course": course, "questions": questions, "source_questions": canonical,
+        "quiz_language": st.session_state.get("language", "English"), "question_source": source,
         "generation_detail": detail, "answers": {}, "start_time": time.time(),
         "submitted": False, "results": None, "celebrated": False,
         "short_answer_grading_detail": "", "tutor_messages": [], "hint_count": 0,
@@ -1873,7 +1881,7 @@ def start_quiz(course: str, questions: List[Dict[str, Any]], source: str, detail
 def reset_quiz() -> None:
     clear_radio_keys()
     st.session_state.update({
-        "course": "", "questions": [], "answers": {}, "start_time": None,
+        "course": "", "questions": [], "source_questions": [], "answers": {}, "start_time": None,
         "submitted": False, "results": None, "generation_detail": "",
         "celebrated": False, "short_answer_grading_detail": "",
         "tutor_messages": [], "hint_count": 0, "xp_awarded_for_round": False,
@@ -2269,6 +2277,7 @@ def get_recent_question_stems(course: str) -> List[str]:
 
 
 def remember_recent_questions(course: str, questions: List[Dict[str, Any]]) -> None:
+    """Remember canonical English stems only; never pollute history with translations."""
     recent = st.session_state.setdefault("recent_stems", {})
     stems = list(recent.get(course, []))
     stems.extend(q["question"] for q in questions)
@@ -2276,18 +2285,23 @@ def remember_recent_questions(course: str, questions: List[Dict[str, Any]]) -> N
 
 
 def prepare_questions_for_user(api_key: str, course: str) -> Tuple[List[Dict[str, Any]], str, str]:
-    """Always build/store an English source quiz, then localize that source if needed."""
+    """Always build a canonical English quiz, then localize that exact source once."""
     recent = get_recent_question_stems(course)
     if course in COURSES:
-        questions = prepare_local_questions(course)
+        source_questions = prepare_local_questions(course)
         source, detail = "local", ""
     else:
-        # Claude generates the canonical source in English. Translation is a separate
-        # deterministic step, so switching languages never translates a translation.
-        questions, source, detail = generate_questions_with_claude(api_key, course, recent)
-    localized, translation_detail = localize_questions(api_key, questions)
+        # Claude always generates the canonical source in English. Translation is a
+        # separate deterministic step, so a translated quiz is never translated again.
+        source_questions, source, detail = generate_questions_with_claude(api_key, course, recent)
+
+    # Keep the immutable source for future reruns/retakes and for language changes.
+    source_questions = json.loads(json.dumps(source_questions, ensure_ascii=False))
+    localized, translation_detail = localize_questions(api_key, source_questions)
     if translation_detail:
         detail = "; ".join(x for x in [detail, translation_detail] if x)
+
+    st.session_state["pending_source_questions"] = json.loads(json.dumps(source_questions, ensure_ascii=False))
     return localized, source, detail
 
 
@@ -2313,14 +2327,29 @@ def render_course_picker(api_key: str) -> None:
     display_name = localized_subject(course_name) if course_name in COURSES else course_name
     with st.spinner(tr("creating", course=display_name)):
         questions, source, detail = prepare_questions_for_user(api_key, course_name)
-    remember_recent_questions(course_name, questions)
+    remember_recent_questions(course_name, st.session_state.get("pending_source_questions", questions))
     start_quiz(course_name, questions, source, detail)
     st.rerun()
 
 
 def render_quiz() -> Optional[Dict[str, Any]]:
-    questions = st.session_state["questions"]
     course = st.session_state["course"]
+    current_language = st.session_state.get("language", "English")
+    quiz_language = st.session_state.get("quiz_language", current_language)
+    source_questions = st.session_state.get("source_questions") or []
+
+    # Self-heal stale quiz text: always translate from the canonical English source,
+    # never from whatever language happened to be displayed on the previous run.
+    if source_questions and quiz_language != current_language:
+        localized, detail = localize_questions(get_configured_api_key(), source_questions)
+        st.session_state["questions"] = localized
+        st.session_state["quiz_language"] = current_language
+        if detail:
+            st.session_state["generation_detail"] = detail
+        clear_quiz_widget_keys()
+        st.rerun()
+
+    questions = st.session_state["questions"]
     total = len(questions)
     subtopics = list(dict.fromkeys(q["subtopic"] for q in questions))
     display_course = localized_course_name(get_configured_api_key(), course)
@@ -2552,7 +2581,7 @@ def render_results(pipeline: Pipeline, results: Dict[str, Any]) -> None:
     if st.session_state.get("language") != "English":
         # Claude normally returns the selected language already. This cached pass also
         # guarantees fallback/offline tips are translated and repairs accidental English output.
-        tips = translate_markdown(get_configured_api_key(), tips)
+        tips = translate_markdown(get_configured_api_key(), tips, target_language=st.session_state.get("language", "English"))
     st.markdown(tips)
     st.caption(tr("results_ai") if results["tips_source"] == "claude" else tr("results_offline"))
     if st.session_state.get("short_answer_grading_detail"):
@@ -2567,7 +2596,7 @@ def render_results(pipeline: Pipeline, results: Dict[str, Any]) -> None:
         api_key = get_configured_api_key()
         with st.spinner(tr("retake_building")):
             questions, source, detail = prepare_questions_for_user(api_key, course)
-        remember_recent_questions(course, questions)
+        remember_recent_questions(course, st.session_state.get("pending_source_questions", questions))
         start_quiz(course, questions, source, detail)
         st.rerun()
     if col_b.button(tr("another"), use_container_width=True):
